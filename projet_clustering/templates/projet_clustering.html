@@ -1,0 +1,124 @@
+{% load static %} 
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>My Data Science's project</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <!-- Correction: Fermeture correcte des balises de commentaire pour Apache Echarts et le JS personnalisé -->
+    <!-- Apache Echarts -->
+    <!-- Custom JS -->
+    <!-- Correction: Activation du script JS en enlevant les commentaires et correction de la balise de commentaire -->
+    <h1>Projet de data science: Analyse de la personnalité des clients</h1>
+    <p>La segmentation des clients est la pratique qui consiste à séparer les clients en groupes qui reflètent des similitudes. 
+    Dans ce projet, je vais réaliser un regroupement non supervisé des données sur les dossiers clients à partir de la base de données d'une entreprise d'épicerie, 
+    por cela je vais diviser les consommateurs en segments, et ainsi, aider l'entreprise à comprendre les besoins, les préoccupations et comportements distincts de ses clients.</p>
+
+    <h2>Informations sur les données</h2>
+    
+    <p>Dans le dataset, il y avait des valeurs manquantes dans les revenus, que j'ai remplacées par la moyenne. La colonne Dt_Customer, qui indique la date à laquelle un client a rejoint la base de données, n'était pas interprétée comme une date et heure. Il y avait aussi des caractéristiques catégorielles et de type object, qui ont été encodées sous forme numérique.</p>
+
+    <p>Dans l'étape suivante, je vais créer quelques caractéristiques à partir de certaines colonnes. Voici le détail :</p>
+        <ul>
+            <li>"Dt_Customer" qui indique le nombre de jours d'inscription d'un client dans la base de données de l'entreprise.</li>
+            <li>"Âge" d'un client à partir de "Year_Birth", indiquant l'année de naissance de la personne respective.</li>
+            <li>"Spent" indiquant le montant total dépensé par le client dans diverses catégories sur une période de deux ans.</li>
+            <li>"Living_With" à partir de "Marital_Status" pour extraire la situation de vie des couples.</li>
+            <li>"Children" pour indiquer le nombre total d'enfants dans un foyer, c'est-à-dire enfants et adolescents.</li>
+            <li>"Family_Size" pour indiquer la taille de la famille.</li>
+            <li>"Is_Parent" pour indiquer le statut parental.</li>
+            <li>Trois catégories dans "Education" en simplifiant ses dénombrements.</li>
+            <li>Suppression de certaines caractéristiques redondantes.</li>
+        </ul>
+
+
+
+    <h2>Statistiques Descriptives</h2>
+    <p>Résumé des statistiques descriptives :</p>
+        <ul>
+            <li>Tranche d'âge : L'ensemble de données inclut des clients nés entre 1893 et 1996, indiquant une large gamme d'âges des clients.</li>
+            <li>Revenu : Le revenu moyen des clients dans l'ensemble de données est d'environ 52 247 $, avec un écart significatif (min : 1 730 $, max : 666 666 $), suggérant une base de clients diversifiée en termes de contextes financiers.</li>
+            <li>Habitudes de dépense : Les clients ont des habitudes de dépense variées à travers différentes catégories de produits (par exemple, vins, fruits, viande, poisson, sucreries, produits en or), les vins étant une catégorie particulièrement populaire.</li>
+            <li>Engagement : Les données incluent également des informations sur le nombre d'achats à travers différents canaux (web, catalogue, magasin), les visites web par mois, et les réponses aux campagnes de marketing, indiquant des niveaux d'engagement différents à travers la base de clients.</li>
+        </ul>
+            <img src="{% static 'fig11.png' %}" alt="Matrice de nuages de points">
+    <p>En analysant ces graphiques, on peut observer des tendances, des relations linéaires ou non linéaires, des regroupements, des valeurs aberrantes (outliers), et la répartition des variables.
+    Par exemple, "Income" et "Spent", on pourrait déduire si les clients avec un revenu plus élevé dépensent aussi plus, ou si cette tendance n'est pas claire dans les données. 
+    De même, on peut voir si le fait d'être parent ou non a un impact sur d'autres variables comme le revenu ou les dépenses.</p>
+    
+    
+    <h2>Carte de chaleur de la matrice de corrélation</h2>
+    <img src="{% static 'fig1.png' %}" alt="Carte de chaleur de la matrice de corrélation">
+    <p>La case où "Income" rencontre "Education" a une valeur de 0.1,
+        ce qui suggère une faible corrélation positive entre le niveau d'éducation et le revenu.
+
+        Les variables les plus correlées sont NumWebPurchases et NumWebVisitsMonth, MntMeatProducts et NumCatalogPurchases
+        et MntFishProducts et MntMeatProducts.</p>
+
+
+    <h2>The elbow Method</h2>
+    <img src="{% static 'fig3.png' %}" alt="graphique elbow methode">
+    <p>Le graphique a une ligne pointillée verticale et une annotation qui indique le point de coude à "k=4" avec un score de distorsion d'environ 7520.799. 
+       C'est le point après lequel l'ajout de clusters supplémentaires ne réduit pas significativement le score de distorsion.
+       Cela suggère que "k=4" est un bon choix pour le nombre de clusters dans vos données.</p>
+    
+    <h2>Graphique de la méthode silhouette</h2> 
+    <img src="{% static 'fig4.png' %}" alt="Methode silhouette">
+
+    <h2>Graphique 3D des clusters</h2>
+    <img src="{% static 'fig5.png' %}" alt="Graphique 3D des clusters">
+    <p>Le graphique représentant le revenu par rapport aux dépenses montre des motifs de regroupement.
+
+        Groupe 0 : dépenses élevées et revenu moyen
+        
+        Groupe 1 : dépenses élevées et revenu élevé
+        
+        Groupe 2 : faibles dépenses et faible revenu
+        
+        Groupe 3 : dépenses élevées et faible revenu</p>
+    <h2>Distribution des clusters</h2>
+    <img src="{% static 'fig6.png' %}" alt="Graphique 3D des clusters">
+    <p>Le graphique représentant le revenu par rapport aux dépenses montre des motifs de regroupement.</p>
+        <ul>
+        <li>Groupe 0 : dépenses élevées et revenu moyen</li>
+        
+        <li>Groupe 1 : dépenses élevées et revenu élevé</li>
+        
+        <li>Groupe 2 : faibles dépenses et faible revenu</li>
+        
+        <li>Groupe 3 : dépenses élevées et faible revenu</li>
+        </ul>
+    <h2>Graphique 3D des clusters</h2>
+    <img src="{% static 'fig7.png' %}" alt="Graphique 3D des clusters selon revenus et dépenses">  
+    <p>Le graphique représentant le revenu par rapport aux dépenses montre des motifs de regroupement.</p>
+        <ul>
+        <li>Groupe 0 : dépenses élevées et revenu moyen</li>
+        
+        <li>Groupe 1 : dépenses élevées et revenu élevé</li>
+        
+        <li>Groupe 2 : faibles dépenses et faible revenu</li>
+        
+        <li>Groupe 3 : dépenses élevées et faible revenu</li>
+    </ul>
+    <h2>"Nombre de promotions acceptées</h2>
+    <img src="{% static 'fig9.png' %}" alt="Barplot nombre de promotions acceptées">
+    <p>Il n'y a pas eu de réponse écrasante aux campagnes jusqu'à présent. Très peu de participants dans l'ensemble. De plus, personne n'a participé aux 5 promotions. 
+    Des campagnes mieux ciblées et mieux planifiées sont nécessaires pour stimuler les ventes</p>
+
+    <h2>"Nombre d'Offres Achetées</h2>
+    <img src="{% static 'fig8.png' %}" alt="Boxplot d'Offres Achetées">
+    <p>Contrairement aux campagnes, les offres proposées ont bien fonctionné. Elles ont eu le meilleur résultat avec le cluster 0 et le cluster 3.
+
+        Cependant, nos clients vedettes du cluster 1 ne sont pas très intéressés par les offres.
+        
+        Rien ne semble attirer de manière significative le cluster 2</p>
+
+    <a href="https://www.linkedin.com/in/votreprofil" target="_blank" class="linkedin-button">Visitez mon LinkedIn</a>
+    <!-- ... -->
+</body>
+</html>
+
