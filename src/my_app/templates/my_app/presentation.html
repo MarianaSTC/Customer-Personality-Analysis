@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>presentation</title>
+<link rel="stylesheet" href="{% static 'css/style1.css' %}">
+</head>
+
+<body>
+    
+        <h1>Présentation du projet</h1>
+        <h2>Visualistions &#128202;<a href="https://colab.research.google.com/drive/1rX9ySPgezY4NyO5Lv7TFJIFqb8oHjspW?usp=sharing">(notebook)</a></h2>
+        <p>Heatmap Corrélation</p>
+        <img src="{% static 'corr.png' %}" alt="Correlation Matrix Heatmap" />
+        <hr>
+        <p>Distribution de clusters</p>
+        <img src="{% static 'distribution.png' %}" alt="Distribution of clusters" />
+        <hr>
+        <p>Revenue et dépense</p>
+        <img src="{% static 'income.png' %}" alt="Incom vs Spending" />
+        <hr>
+        <p>Proportion des dépenses</p>
+        <img src="{% static 'proportion.png' %}" alt="Proportion des dépenses" />
+        <hr>
+
+     
+            
+        <footer>
+                
+                
+              </footer>
+</body>
+    </html>
